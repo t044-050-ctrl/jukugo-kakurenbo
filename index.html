@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>熟語かくれんぼ</title>
- <meta property="og:title" content="熟語かくれんぼ">
-    <meta property="og:description" content="作文の中から熟語を見つけるゲームです。">
-    <meta property="og:type" content="website">
 <style>
   * { 
     box-sizing: border-box; 
@@ -271,7 +268,7 @@
   }
   .draggable-word:active { cursor: grabbing; transform: scale(1.05); }
   .draggable-word.dragged-out {
-    opacity: 0;
+    opacity: 0.35;
     pointer-events: none;
   }
   
@@ -587,7 +584,7 @@
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('dblclick', e => e.preventDefault());
 
-// --- 添付ファイルの全390語（2字熟語346語＋3〜4字熟語44語）完全収録データベース ---
+// --- 全390語（2字熟語346語＋3〜4字熟語44語）完全収録データベース ---
 const IDIOM_2CHAR_DATABASE = [
   { word: "挨拶", reading: "あいさつ", meaning: "出会った時や別れ際の礼儀の言葉" },
   { word: "愛情", reading: "あいじょう", meaning: "人を愛し慈しむ深い心" },
@@ -1135,7 +1132,7 @@ const COMPOSITION_GROUPS = [
   { words: ["供述", "証言", "証拠", "刑事", "事件"], text: "街で起きた不思議な{4}の真相を明らかにするため、担当の{3}が現場の調査を始めました。目撃者の詳しい{1}や容疑者の{0}、さらに残された確かな{2}をつなぎ合わせた結果、ついに犯人が明らかになりました。" },
   { words: ["局長", "局面", "極端", "判断", "慎重"], text: "放送局で大きなトラブルが発生し、現場の責任者である{0}は難しい{1}に立たされました。{2}な対応に走るのではなく、状況を冷静に見極めて{4}に{3}を下したことで無事に放送を続けられました。" },
   { words: ["銀行", "貯金", "金融", "経済", "社会"], text: "お小遣いやお年玉の一部を{0}に預けて、将来のために少しずつ{1}しています。お金を安全に管理し、必要なところへ融通する{2}の仕組みは、わたしたちの{3}や{4}が円滑に動くために欠かせません。" },
-  { words: ["緊張", "我慢", "心配", "応援", "安心"], text: "大勢の観客の前での発表は、心臓がドキドキしてとても{0}します。最初は不安で{2}でしたが、弱音を{1}して舞台に立つと、客席から家族や友達が温かい{3}を送ってくれたおかげで心が落ち着き、{4}して実力を発揮できました。" },
+  { words: ["緊張", "我慢", "心配", "応援", "安心"], text: "大勢の観客の前での発表は、心臓がドキドキしてとても{0}します。最初は不安で{2}でしたが、弱音を{1}して舞台に立つと、客席から家族や友達が温かい{3}を送くれたおかげで心が落ち着き、{4}して実力を発揮できました。" },
   { words: ["具合", "体調", "栄養", "朝食", "健康"], text: "朝起きたらまずバランスよく{3}をとり、一日のエネルギーと{2}をしっかりと補給します。自分の体の{0}や{1}にいつも気を配ることが、元気に学校へ通い続ける{4}の秘訣です。" },
   { words: ["喧嘩", "仲直り", "相談", "理解", "友情"], text: "ささいなすれ違いから親友と{0}をしてしまい、どうすればよいか先生に{2}しました。おたがいの気持ちを正直に話し合って深く{3}し合ったことで無事に{1}でき、以前よりもさらに強い{4}で結ばれました。" },
   { words: ["現在", "過去", "未来", "時間", "刻一刻"], text: "時計の針は{4}と進み、今この瞬間の{0}もあっという間に{1}へと変わっていきます。これまでの経験を大切にしながら、輝かしい{2}に向かって限られた{3}を有意義に使いたいです。" },
@@ -1287,7 +1284,7 @@ const EXTRA_WORDS_DICTIONARY = {
   "行事": { word: "行事", reading: "ぎょうじ", meaning: "学校や地域で決まって行う催し" },
   "活気": { word: "活気", reading: "かっき", meaning: "いきいきとした元気な様子" },
   "仕組み": { word: "仕組み", reading: "しくみ", meaning: "物事の組み立てや構造" },
-  "生活": { word: "生活", reading: "せいかつ", meaning: "日々暮らしていくこと" },
+  "生活": { word: "生活", reading: "せいかつ", meaning: "日々の暮らし" },
   "販売": { word: "販売", reading: "はんばい", meaning: "品物を売ること" },
   "商業": { word: "商業", reading: "しょうぎょう", meaning: "品物を売り買いする仕事" },
   "商店": { word: "商店", reading: "しょうてん", meaning: "品物を売るお店" },
@@ -1311,55 +1308,65 @@ const EXTRA_WORDS_DICTIONARY = {
 };
 Object.assign(WORD_MEANING_MAP, EXTRA_WORDS_DICTIONARY);
 
-// --- ボーナスステージ用データベース（高学年・発展レベル向け4種） ---
-const BONUS_ANTONYM_PAIRS = [
-  { word: "生産者", match: "消費者" }, { word: "輸出", match: "輸入" },
-  { word: "権利", match: "義務" }, { word: "賛成", match: "反対" },
-  { word: "開始", match: "終了" }, { word: "勝利", match: "敗北" },
-  { word: "過去", match: "未来" }, { word: "安全", match: "危険" },
-  { word: "増加", match: "減少" }, { word: "公平", match: "不公平" },
-  { word: "緊張", match: "緩和" }, { word: "原因", match: "結果" },
-  { word: "内部", match: "外部" }, { word: "抽象", match: "具体" },
-  { word: "主観", match: "客観" }, { word: "積極", match: "消極" }
+// --- ボーナスステージ用データベース（4種類） ---
+const ANTONYM_PAIRS = [
+  { word: "生産者", match: "消費者" },
+  { word: "権利", match: "義務" },
+  { word: "輸出", match: "輸入" },
+  { word: "勝利", match: "敗北" },
+  { word: "賛成", match: "反対" },
+  { word: "過去", match: "未来" },
+  { word: "原因", match: "結果" },
+  { word: "許可", match: "禁止" },
+  { word: "公平", match: "不公平" },
+  { word: "複雑", match: "簡単" },
+  { word: "安全", match: "危険" },
+  { word: "開始", match: "完了" }
 ];
 
-const BONUS_SYNONYM_PAIRS = [
-  { word: "規則", match: "規律" }, { word: "検討", match: "調査" },
-  { word: "貢献", match: "支援" }, { word: "改革", match: "改善" },
-  { word: "維持", match: "管理" }, { word: "予想", match: "予測" },
-  { word: "信頼", match: "信用" }, { word: "計画", match: "企画" },
-  { word: "理解", match: "納得" }, { word: "継続", match: "連続" },
-  { word: "拡大", match: "拡張" }, { word: "構成", match: "構造" },
-  { word: "目的", match: "目標" }, { word: "困難", match: "苦労" },
-  { word: "協力", match: "共同" }, { word: "迅速", match: "素早い" }
+const SYNONYM_PAIRS = [
+  { word: "規則", match: "規律" },
+  { word: "検討", match: "調査" },
+  { word: "貢献", match: "支援" },
+  { word: "改造", match: "改良" },
+  { word: "基礎", match: "土台" },
+  { word: "目的", match: "目標" },
+  { word: "努力", match: "精進" },
+  { word: "理解", match: "納得" },
+  { word: "信頼", match: "信用" },
+  { word: "復旧", match: "回復" },
+  { word: "容易", match: "簡単" },
+  { word: "議論", match: "討論" }
 ];
 
-const BONUS_YOJI_SPLIT_PAIRS = [
-  { word: "温故", match: "知新" }, { word: "一石", match: "二鳥" },
-  { word: "試行", match: "錯誤" }, { word: "一生", match: "懸命" },
-  { word: "自業", match: "自得" }, { word: "十人", match: "十色" },
-  { word: "以心", match: "伝心" }, { word: "四苦", match: "八苦" },
-  { word: "千載", match: "一遇" }, { word: "起死", match: "回生" },
-  { word: "百発", match: "百中" }, { word: "前代", match: "未聞" },
-  { word: "危機", match: "一髪" }, { word: "無我", match: "夢中" },
-  { word: "電光", match: "石火" }, { word: "臨機", match: "応変" },
-  { word: "七転", match: "八起" }, { word: "切磋", match: "琢磨" },
-  { word: "一期", match: "一会" }, { word: "適材", match: "適所" }
+const YOJI_SPLIT_PAIRS = [
+  { word: "温故", match: "知新" },
+  { word: "試行", match: "錯誤" },
+  { word: "一石", match: "二鳥" },
+  { word: "以心", match: "伝心" },
+  { word: "十人", match: "十色" },
+  { word: "起死", match: "回生" },
+  { word: "百発", match: "百中" },
+  { word: "危機", match: "一髪" },
+  { word: "無我", match: "夢中" },
+  { word: "電光", match: "石火" },
+  { word: "適材", match: "適所" },
+  { word: "臨機", match: "応変" }
 ];
 
-const BONUS_HOMOPHONE_PAIRS = [
-  { word: "意思（考え）", match: "意志（強い心）" },
-  { word: "想像（思い描く）", match: "創造（作り出す）" },
-  { word: "対象（あて）", match: "対照（くらべる）" },
-  { word: "感心（すばらしい）", match: "関心（興味をもつ）" },
-  { word: "企画（計画を立てる）", match: "規格（標準の定め）" },
-  { word: "現象（目に見える事）", match: "減少（数がへる）" },
-  { word: "保証（請け合う）", match: "保障（守り支える）" },
-  { word: "製作（物を作る）", match: "制作（作品を作る）" },
-  { word: "過程（道のり）", match: "家庭（家族の場）" },
-  { word: "効率（成果の割合）", match: "公立（公の設立）" },
-  { word: "移行（移り変わる）", match: "意向（どうしたいか）" },
-  { word: "改正（正しく改める）", match: "快晴（よい天気）" }
+const HOMOPHONE_PAIRS = [
+  { word: "意思", match: "何かを行おうとする考え" },
+  { word: "意志", match: "やり遂げようとする強い心" },
+  { word: "想像", match: "頭の中で思い描くこと" },
+  { word: "創造", match: "新しいものを初めて作り出すこと" },
+  { word: "感心", match: "すばらしいと心を動かされること" },
+  { word: "関心", match: "興味や気にかける気持ち" },
+  { word: "企画", match: "計画を立て企てること" },
+  { word: "規格", match: "標準となる定め・基準" },
+  { word: "改正", match: "規則や法律を正しく改めること" },
+  { word: "快晴", match: "空にほとんど雲がない晴れ" },
+  { word: "保障", match: "安全な状態を保つこと" },
+  { word: "補償", match: "与えた損害をつぐなうこと" }
 ];
 
 // --- グローバル状態 ---
@@ -1371,14 +1378,13 @@ let subStagePoints = 0;
 let isPatternB = false;
 let timer = 90;
 let timerInterval = null;
+let isTimeUpHandled = false;
+let isStageTransitioning = false;
 let soundEnabled = true;
 let isRubyHidden = true;
 
-let deckCompositions = [];
-let availableAntonymList = [];
-let availableSynonymList = [];
-let availableYojiSplitList = [];
-let availableHomophoneList = [];
+let availableCompositions = [];
+let availableBonusLists = [[], [], [], []];
 let bonusRoundCount = 0;
 let currentIdioms = [];
 let usedHintsInSubStage = [false, false, false, false, false];
@@ -1388,32 +1394,35 @@ let draggedWordElem = null;
 let touchClone = null;
 let touchStartX = 0, touchStartY = 0;
 
-function refillAllDeck() {
-  deckCompositions = [...COMPOSITION_GROUPS].sort(() => Math.random() - 0.5);
+function stopTimer() {
+  if (timerInterval !== null) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
 }
 
 function getNextComposition() {
-  if (deckCompositions.length === 0) {
-    refillAllDeck();
+  if (availableCompositions.length === 0) {
+    availableCompositions = [...COMPOSITION_GROUPS].sort(() => Math.random() - 0.5);
   }
-  const group = deckCompositions.pop();
-  const items = group.words.map(w => WORD_MEANING_MAP[w] || { word: w, reading: "", meaning: "文脈に合う言葉" });
+  const group = availableCompositions.pop();
+  
+  let htmlStr = group.text;
+  const activeWords = [];
 
-  let html = group.text;
-  const usedWordsInHtml = [];
-  items.forEach((item, idx) => {
+  group.words.forEach((word, idx) => {
     const placeholder = `{${idx}}`;
-    if (html.includes(placeholder)) {
-      const span = `<span class="draggable-word" data-word="${item.word}"><ruby>${item.word}<rt>${item.reading}</rt></ruby></span>`;
-      html = html.split(placeholder).join(span);
-      usedWordsInHtml.push(item);
+    if (htmlStr.includes(placeholder)) {
+      const info = WORD_MEANING_MAP[word] || { word: word, reading: "", meaning: "文脈に合う言葉" };
+      activeWords.push(info);
+      const spanTag = `<span class="draggable-word" data-word="${info.word}"><ruby>${info.word}<rt>${info.reading}</rt></ruby></span>`;
+      htmlStr = htmlStr.split(placeholder).join(spanTag);
     }
   });
 
   return {
-    words: usedWordsInHtml.map(i => i.word),
-    items: usedWordsInHtml,
-    html: html
+    words: activeWords,
+    html: htmlStr
   };
 }
 
@@ -1472,6 +1481,14 @@ function updateTrackUI() {
   }
 }
 
+function cleanupTouchDrag() {
+  document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
+  if (draggedWordElem) draggedWordElem.style.opacity = '1';
+  if (touchClone) touchClone.remove();
+  draggedWordElem = null;
+  touchClone = null;
+}
+
 // --- ゲームフロー ---
 function startStage() {
   currentSubStage = 1;
@@ -1479,7 +1496,10 @@ function startStage() {
 }
 
 function startSubStage() {
-  clearInterval(timerInterval);
+  stopTimer();
+  cleanupTouchDrag();
+  isTimeUpHandled = false;
+  isStageTransitioning = false;
   timer = 90;
   subStagePoints = 0;
   isPatternB = (currentStage % 2 === 0);
@@ -1488,10 +1508,7 @@ function startSubStage() {
   document.getElementById('stage-display').innerText = `🚩 STAGE ${currentStage} (${currentSubStage}/3)`;
 
   const compData = getNextComposition();
-  currentIdioms = [...compData.items];
-  
-  // 順序をランダムに
-  currentIdioms.sort(() => Math.random() - 0.5);
+  currentIdioms = [...compData.words].sort(() => Math.random() - 0.5);
   
   document.getElementById('comp-title-text').innerText = isPatternB ? "▼ 右の熟語を空らんに当てはめよう ▼" : "▼ 作文にかくれた熟語を見つけて右にスワイプ！ ▼";
 
@@ -1500,6 +1517,7 @@ function startSubStage() {
   const compArea = document.getElementById('composition-area');
   
   const loadContent = () => {
+    stopTimer();
     let htmlStr = compData.html;
     if (isPatternB) {
       htmlStr = htmlStr.replace(/<span class="draggable-word" data-word="([^"]+)">(.*?)<\/span>/g, '<span class="inline-drop-slot drop-slot" data-word="$1"></span>');
@@ -1517,7 +1535,6 @@ function startSubStage() {
         slot.ondrop = e => handleDrop(e, slot);
       });
     } else {
-      // ステージAは最初すべての熟語を隠す（かくれんぼ状態）
       compArea.querySelectorAll('.draggable-word').forEach(w => {
         w.classList.add('hidden-idiom');
       });
@@ -1526,9 +1543,17 @@ function startSubStage() {
     setupDraggables();
     
     timerInterval = setInterval(() => {
+      if (isTimeUpHandled || isStageTransitioning) {
+        stopTimer();
+        return;
+      }
       timer--;
+      if (timer < 0) timer = 0;
       document.getElementById('timer-display').innerText = `⏱ ${timer}`;
-      if (timer <= 0) handleTimeUp();
+      if (timer <= 0) {
+        stopTimer();
+        handleTimeUp();
+      }
     }, 1000);
   };
 
@@ -1586,7 +1611,7 @@ function renderProblemRows() {
 }
 
 function showHint(rowIndex, btn, word) {
-  if (usedHintsInSubStage[rowIndex]) return;
+  if (usedHintsInSubStage[rowIndex] || isTimeUpHandled || isStageTransitioning) return;
   usedHintsInSubStage[rowIndex] = true;
   btn.classList.add('used');
   btn.innerText = '使用済';
@@ -1621,11 +1646,22 @@ function setupDraggables() {
       }
     };
 
-    w.addEventListener('click', () => revealWord());
-    w.addEventListener('mousedown', () => revealWord());
+    w.addEventListener('click', () => {
+      if (isTimeUpHandled || isStageTransitioning) return;
+      revealWord();
+    });
+
+    w.addEventListener('mousedown', () => {
+      if (isTimeUpHandled || isStageTransitioning) return;
+      revealWord();
+    });
 
     w.draggable = true;
     w.ondragstart = (e) => {
+      if (isTimeUpHandled || isStageTransitioning) {
+        e.preventDefault();
+        return;
+      }
       revealWord();
       draggedWordElem = w;
       e.dataTransfer.setData('text/plain', w.dataset.word);
@@ -1633,21 +1669,14 @@ function setupDraggables() {
     };
     w.ondragend = () => { draggedWordElem = null; };
 
-    // Touch
     w.addEventListener('touchstart', (e) => {
+      if (isTimeUpHandled || isStageTransitioning) return;
       if (e.touches.length > 1) return;
       e.preventDefault();
       e.stopPropagation();
 
       revealWord();
-      
-      if (touchClone) {
-        touchClone.remove();
-        touchClone = null;
-      }
-      if (draggedWordElem) {
-        draggedWordElem.style.opacity = '1';
-      }
+      cleanupTouchDrag();
 
       draggedWordElem = w;
       playSE('click');
@@ -1666,7 +1695,7 @@ function setupDraggables() {
     }, {passive: false});
 
     w.addEventListener('touchmove', (e) => {
-      if (!touchClone) return;
+      if (!touchClone || isTimeUpHandled || isStageTransitioning) return;
       e.preventDefault();
       e.stopPropagation();
       const touch = e.touches[0];
@@ -1679,17 +1708,13 @@ function setupDraggables() {
       if (slot && !slot.classList.contains('filled')) slot.classList.add('drag-over');
     }, {passive: false});
 
-    const resetTouchDrag = () => {
-      document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
-      if (draggedWordElem) draggedWordElem.style.opacity = '1';
-      if (touchClone) touchClone.remove();
-      draggedWordElem = null;
-      touchClone = null;
-    };
-
     w.addEventListener('touchend', (e) => {
       if (!touchClone) return;
       e.preventDefault();
+      if (isTimeUpHandled || isStageTransitioning) {
+        cleanupTouchDrag();
+        return;
+      }
       const touch = e.changedTouches[0];
       document.querySelectorAll('.drop-slot').forEach(s => s.classList.remove('drag-over'));
       const el = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -1702,23 +1727,30 @@ function setupDraggables() {
         touchClone = null;
         processDrop(currentDragElem.dataset.word, slot, currentDragElem, currentClone);
       } else {
-        resetTouchDrag();
+        cleanupTouchDrag();
       }
     });
 
-    w.addEventListener('touchcancel', () => resetTouchDrag());
+    w.addEventListener('touchcancel', () => {
+      cleanupTouchDrag();
+    });
   });
 }
 
 function handleDrop(e, slot) {
   e.preventDefault();
   slot.classList.remove('drag-over');
-  if (slot.classList.contains('filled')) return;
+  if (isTimeUpHandled || isStageTransitioning || slot.classList.contains('filled')) return;
   const word = e.dataTransfer.getData('text/plain');
   processDrop(word, slot, draggedWordElem, null);
 }
 
 function processDrop(word, slot, sourceElem, cloneElem) {
+  if (isTimeUpHandled || isStageTransitioning) {
+    if (cloneElem) cloneElem.remove();
+    return;
+  }
+
   if (word === slot.dataset.word) {
     playSE('correct');
     slot.classList.add('filled');
@@ -1762,11 +1794,14 @@ function processDrop(word, slot, sourceElem, cloneElem) {
 }
 
 async function checkAllCompleted() {
+  if (isStageTransitioning || isTimeUpHandled) return;
   const slots = document.querySelectorAll('.drop-slot');
   const allFilled = Array.from(slots).every(s => s.classList.contains('filled'));
   
   if (allFilled) {
-    clearInterval(timerInterval);
+    isStageTransitioning = true;
+    stopTimer();
+    cleanupTouchDrag();
     
     const timePts = Math.max(0, timer);
     const earnedPts = subStagePoints + timePts;
@@ -1812,41 +1847,41 @@ async function checkAllCompleted() {
   }
 }
 
-// --- ボーナス特別ステージ（4種ローテーション：対義語・類義語・四字熟語合体・同音異義語） ---
+// --- ボーナス特別ステージ（4種類ローテーション） ---
 function startBonusStage() {
+  stopTimer();
+  cleanupTouchDrag();
   bonusRoundCount++;
-  const mode = bonusRoundCount % 4; // 1:対義語, 2:類義語, 3:四字熟語合体, 0:同音異義語
+  const modeIndex = (bonusRoundCount - 1) % 4; // 0:対義語, 1:類義語, 2:四字熟語合体, 3:同音異義語
 
-  let sourceList, titleText, descText;
-  if (mode === 1) {
-    if (availableAntonymList.length < 4) {
-      availableAntonymList = [...BONUS_ANTONYM_PAIRS].sort(() => Math.random() - 0.5);
+  const configs = [
+    {
+      source: ANTONYM_PAIRS,
+      title: "⭐ ボーナス: 対義語ペアあわせ ⭐",
+      desc: "反対の意味になる言葉（対義語）どうしをペアにしよう！"
+    },
+    {
+      source: SYNONYM_PAIRS,
+      title: "⭐ ボーナス: 類義語ペアあわせ ⭐",
+      desc: "意味が似ている言葉（類義語）どうしをペアにしよう！"
+    },
+    {
+      source: YOJI_SPLIT_PAIRS,
+      title: "⭐ ボーナス: 四字熟語 合体チャレンジ ⭐",
+      desc: "上の2文字と下の2文字を組み合わせて四字熟語を完成させよう！"
+    },
+    {
+      source: HOMOPHONE_PAIRS,
+      title: "⭐ ボーナス: 同音異義語 使い分け ⭐",
+      desc: "同じ読みの熟語と、その正しい意味をペアにしよう！"
     }
-    sourceList = availableAntonymList;
-    titleText = "⭐ ボーナス: 対義語ペアあわせ ⭐";
-    descText = "反対の意味になる熟語どうしをペアにしよう！";
-  } else if (mode === 2) {
-    if (availableSynonymList.length < 4) {
-      availableSynonymList = [...BONUS_SYNONYM_PAIRS].sort(() => Math.random() - 0.5);
-    }
-    sourceList = availableSynonymList;
-    titleText = "⭐ ボーナス: 類義語ペアあわせ ⭐";
-    descText = "似た意味をもつ熟語どうしをペアにしよう！";
-  } else if (mode === 3) {
-    if (availableYojiSplitList.length < 4) {
-      availableYojiSplitList = [...BONUS_YOJI_SPLIT_PAIRS].sort(() => Math.random() - 0.5);
-    }
-    sourceList = availableYojiSplitList;
-    titleText = "⭐ ボーナス: 四字熟語 完成チャレンジ ⭐";
-    descText = "上の2文字と下の2文字をつなげて四字熟語を完成させよう！";
-  } else {
-    if (availableHomophoneList.length < 4) {
-      availableHomophoneList = [...BONUS_HOMOPHONE_PAIRS].sort(() => Math.random() - 0.5);
-    }
-    sourceList = availableHomophoneList;
-    titleText = "⭐ ボーナス: 同音異義語ペアあわせ ⭐";
-    descText = "同じ読みで意味がちがう熟語どうしをペアにしよう！";
+  ];
+
+  const cfg = configs[modeIndex];
+  if (availableBonusLists[modeIndex].length < 4) {
+    availableBonusLists[modeIndex] = [...cfg.source].sort(() => Math.random() - 0.5);
   }
+  const sourceList = availableBonusLists[modeIndex];
 
   const pairs = [];
   const usedWords = new Set();
@@ -1869,16 +1904,17 @@ function startBonusStage() {
   
   let selectedWord = null;
   let onoFound = 0;
+  let bonusEnded = false;
 
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
   modal.innerHTML = `
     <div class="special-stage-container">
       <div class="special-header">
-        <div class="special-title">${titleText}</div>
+        <div class="special-title">${cfg.title}</div>
         <div class="special-timer" id="ono-timer">⏱ 20</div>
       </div>
-      <div style="color:#bfdbfe; font-size:14px;">${descText}</div>
+      <div style="color:#bfdbfe; font-size:14px;">${cfg.desc}</div>
       <div class="special-grid" id="ono-grid1"></div>
       <div class="special-grid" id="ono-grid2"></div>
     </div>
@@ -1890,7 +1926,7 @@ function startBonusStage() {
   words.forEach(w => {
     const btn = document.createElement('div'); btn.className = 'ono-card'; btn.innerText = w;
     btn.onclick = () => {
-      if(btn.classList.contains('matched')) return;
+      if(bonusEnded || btn.classList.contains('matched')) return;
       document.querySelectorAll('#ono-grid1 .ono-card').forEach(c => c.classList.remove('selected'));
       btn.classList.add('selected'); selectedWord = w; playSE('click');
     };
@@ -1900,7 +1936,7 @@ function startBonusStage() {
   matches.forEach(m => {
     const btn = document.createElement('div'); btn.className = 'ono-card'; btn.innerText = m.text;
     btn.onclick = () => {
-      if(btn.classList.contains('matched') || !selectedWord) return;
+      if(bonusEnded || btn.classList.contains('matched') || !selectedWord) return;
       if (selectedWord === m.id) {
         const colorClass = `matched-${onoFound % 4}`;
         btn.classList.add('matched', colorClass);
@@ -1919,11 +1955,22 @@ function startBonusStage() {
   playSE('fanfare');
   let oTime = 20;
   const oInt = setInterval(() => {
-    oTime--; modal.querySelector('#ono-timer').innerText = `⏱ ${oTime}`;
-    if(oTime <= 0) { clearInterval(oInt); endBonusStage(false, modal); }
+    if (bonusEnded) {
+      clearInterval(oInt);
+      return;
+    }
+    oTime--;
+    const tEl = modal.querySelector('#ono-timer');
+    if (tEl) tEl.innerText = `⏱ ${Math.max(0, oTime)}`;
+    if(oTime <= 0) {
+      clearInterval(oInt);
+      endBonusStage(false, modal);
+    }
   }, 1000);
 
   function endBonusStage(success, mNode) {
+    if (bonusEnded) return;
+    bonusEnded = true;
     clearInterval(oInt);
     playSE('milestone');
     if (success) triggerConfetti();
@@ -1944,7 +1991,7 @@ function startBonusStage() {
           startStage();
         });
       }, 2000);
-    }, 2000);
+    }, 1500);
   }
 }
 
@@ -2002,7 +2049,7 @@ function triggerGoal(onComplete) {
         rollUpPoints(totalPoints + 100, () => {
           modal.innerHTML = `
             <div class="start-hero-card" style="padding:20px;">
-              <h2>🏆 50マス達成！</h2><p>現在: ${totalPoints}pt</p>
+              <h2>🏆 50マス達成！</h2><p style="margin: 12px 0;">現在: ${totalPoints}pt</p>
               <button class="start-play-btn" id="goal-continue-btn" style="margin-top:10px;">つづける</button>
             </div>`;
           document.getElementById('goal-continue-btn').onclick = () => {
@@ -2031,10 +2078,33 @@ function rollUpPoints(target, onComp) {
 }
 
 function handleTimeUp() {
-  clearInterval(timerInterval); playSE('wrong');
-  const m = document.createElement('div'); m.className = 'modal-overlay';
-  m.innerHTML = `<div class="start-hero-card"><h2>⏰ タイムアップ</h2><button class="start-play-btn" onclick="this.closest('.modal-overlay').remove(); startStage();">やりなおす</button></div>`;
+  if (isTimeUpHandled || isStageTransitioning) return;
+  isTimeUpHandled = true;
+  stopTimer();
+  cleanupTouchDrag();
+  playSE('wrong');
+
+  const existingTimeUp = document.getElementById('timeup-modal');
+  if (existingTimeUp) existingTimeUp.remove();
+
+  const m = document.createElement('div');
+  m.className = 'modal-overlay';
+  m.id = 'timeup-modal';
+  m.innerHTML = `
+    <div class="start-hero-card">
+      <h2 style="font-size: 32px; margin-bottom: 16px;">⏰ タイムアップ</h2>
+      <p style="color: #fca5a5; margin-bottom: 24px;">もういちどチャレンジしよう！</p>
+      <button class="start-play-btn" id="retry-stage-btn">やりなおす</button>
+    </div>
+  `;
   document.getElementById('game-container').appendChild(m);
+
+  const retryBtn = document.getElementById('retry-stage-btn');
+  retryBtn.onclick = () => {
+    retryBtn.disabled = true;
+    m.remove();
+    startStage();
+  };
 }
 
 function triggerStageZoomIn(text, onComp) {
@@ -2122,7 +2192,6 @@ function triggerConfetti() {
 
 window.addEventListener('load', () => {
   initTrack();
-  refillAllDeck();
   const m = document.createElement('div');
   m.className = 'modal-overlay';
   m.innerHTML = `
